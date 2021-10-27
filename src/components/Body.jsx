@@ -2,7 +2,6 @@ import React from 'react'
 import "./Body.css"
 import Container from './Container'
 import Player from './Player'
-import {FaApple} from "react-icons/fa"
 import PickCard from './PickCard'
 function Body() {
 
