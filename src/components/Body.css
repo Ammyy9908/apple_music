@@ -1,0 +1,77 @@
+.body{
+    grid-area: body;
+    background-color: #fff;
+    position: relative;
+    max-height: 100vh;
+    overflow-y: scroll;
+}
+.body_header{
+    width: 100%;
+    margin: 35px auto;
+    color: #000;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid #9c9c9c91;
+    padding-bottom: 6px;
+}
+.body_header h2{
+    font-size: 35px;
+}
+.user__avatar{
+    width: 35px;
+    height: 35px;
+    background-color: #ccc;
+    border-radius: 50%;
+}
+.user__avatar img{
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    border-radius: inherit;
+}
+
+.top-pick-section{
+    width: 100%;
+    margin-top: 0;
+    position: relative;
+}
+
+.blur_left{
+width: 25px;
+height: 360px;
+background-color: #fffffff3;
+position: absolute;
+z-index: 3;
+left: -10px;
+top: 50px;
+border-top-right-radius: 5px;
+border-bottom-right-radius: 5px;
+filter: blur(10px);
+}
+.blur_right{
+    width: 25px;
+height: 360px;
+background-color: #fffffff3;
+position: absolute;
+z-index: 3;
+top: 50px;
+right: -10px;
+border-top-right-radius: 5px;
+border-bottom-right-radius: 5px;
+filter: blur(10px);
+}
+
+.top-pick-section h4{
+    margin-bottom: 5px;
+    position: relative;
+}
+.top-pick-cards{
+    display: flex;
+    max-width: 100%;
+    overflow-x: scroll;
+    gap:18px;
+    position: relative;
+    overflow-y: hidden;
+}
+

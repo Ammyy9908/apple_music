@@ -1,0 +1,91 @@
+.sidebar{
+    grid-area: sidebar;
+    background-color:#E6DAE5;
+   
+}
+
+.sidebar-body{
+    width: 95%;
+    margin: 65px auto;
+}
+.sidebar-search{
+    width: 100%;
+    display: flex;
+    background-color: #D9CDD8;
+    height: 28px;
+    display: flex;
+    align-items: center;
+    color: #fff;
+    border-radius: 5px;
+    gap:5px;
+}
+
+.sidebar-search svg{
+    fill: #262626;
+}
+.sidebar-search input{
+    flex: 1;
+    height: 80%;
+    background-color: transparent;
+    border: 1px solid transparent;
+    outline: 0;
+    color: var(--text-color);
+}
+
+.sidebar-search svg{
+    margin-left: 5px;
+}
+.sidebar-search:focus{
+    border: 2px solid #EE5F75;
+}
+
+ul{
+    margin: 0;
+    padding: 0;
+}
+
+.apple_music_list{
+    margin-top: 15px;
+}
+
+.apple_music_list > li > span{
+    color: #B4A8B3;
+    font-size: 12px;
+    font-weight: 700;
+}
+.apple_music_list > li{
+    margin-top: 5px;
+}
+.apple_music_list > li ul{
+    display: flex;
+    flex-direction: column;
+}
+.apple_music_list > li ul li{
+    padding-top: 5px;
+    padding-bottom: 5px;
+    display: flex;
+    align-items: center;
+    gap:11px;
+    cursor: pointer;
+    color: #EE5F75;
+    border-radius: 5px;
+}
+
+.active__option{
+    background-color: #CCC0CB;
+}
+.apple_music_list > li ul li svg{
+    fill: #EE5F75;
+    margin-left: 15px;
+    
+}
+.apple_music_list > li ul li span{
+    color: rgb(22, 22, 22);
+    font-weight: 400;
+    font-size: 13px;
+}
+
+.apple_music_list > li ul li svg path{
+    fill: #EE5F75;
+    
+}
