@@ -10,6 +10,7 @@
     align-items: center;
     justify-content: space-between;
     gap:25px;
+    z-index: 99;
 }
 .player-left,.player-meta,.player-right{
     flex: 1;
