@@ -39,5 +39,154 @@
       To begin the development, run `npm start` or `yarn start`.
       To create a production bundle, use `npm run build` or `yarn build`.
     -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/js-cookie/2.2.1/js.cookie.min.js" integrity="sha512-Meww2sXqNHxI1+5Dyh/9KAtvI9RZSA4c1K2k5iL02oiPO/RH3Q30L3M1albtqMg50u4gRTYdV4EXOQqXEI336A==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://sdk.scdn.co/spotify-player.js"></script>
+    <script>
+      window.onSpotifyWebPlaybackSDKReady = () => {
+
+
+
+    
+
+
+        
+
+
+
+
+        // You can now initialize Spotify.Player and use the SDK
+
+        
+
+        var cookies = 
+                document.cookie.split(';').reduce(
+                                (cookies, cookie) => {
+                    const [name, val] = cookie.split(
+                                '=').map(c => c.trim());
+                      
+                    cookies[name] = val;
+                    return cookies;
+                }, {});
+            console.log(cookies);
+
+            const token = cookies.SPOTIFY_TOKEN;
+
+            if(token){
+
+              const player = new Spotify.Player({
+    name: 'Apple Music',
+    getOAuthToken: cb => { cb(token); },
+    volume: 1.0
+  });
+
+
+
+
+  player.addListener('initialization_error', ({ message }) => { console.error(message); });
+  player.addListener('authentication_error', ({ message }) => { console.error(message); });
+  player.addListener('account_error', ({ message }) => { console.error(message); });
+  player.addListener('playback_error', ({ message }) => { console.error(message); });
+
+  // Playback status updates
+  player.addListener('player_state_changed', state => { 
+    console.log(state); 
+    console.log('Song State Change and state is ',state)
+
+    //this method use to check is current played song match with current state of the player
+  //   const checkCurrentSongId = (track_id)=>{
+  //   return document.querySelector('.like-button').id===track_id;
+
+  // }
+
+
+  const getCurrentDevice = async ()=>{
+      try{
+        const r = await axios.get(`https://api.spotify.com/v1/me/player`,{
+          headers:{
+            "Authorization":`Bearer ${Cookies.get("SPOTIFY_TOKEN")}`
+          }
+        });
+        return r.data;
+      }
+      catch(e){
+        if(e.response && e.response.data){
+          return e.response.data;
+        }
+      }
+    }
+
+    const setVolume = async ()=>{
+      try{
+        const r = await axios.put(`https://api.spotify.com/v1/me/player/volume?volume_percent=50`,{
+          
+        },{
+          headers:{
+            'Authorization':`Bearer ${Cookies.get('SPOTIFY_TOKEN')}`
+          }
+        })
+      }
+      catch(e){
+        return e.response.data;
+      }
+    }
+    if(state){
+
+      // setVolume().then((feedback)=>{
+      //   console.log(`Volume feedback=>`,feedback);
+      // })
+      Cookies.set('DEVICE_ENABLE',true);
+      const currentTrack = state.track_window.current_track;
+      const songThumb = currentTrack.album.images[2].url;
+      const songName = currentTrack.name;
+      const artists = currentTrack.artists;
+
+      document.querySelector('.current_song_thumb').setAttribute('src',songThumb)
+      document.querySelector('.song_name').textContent = songName;
+      document.querySelector('.song_album').textContent = `${artists[0].name}--${songName}`
+    // document.querySelector('.current-song-thumb').setAttribute('src',songThumb);
+    // document.querySelector('.song__name').textContent = songName;
+
+    // document.querySelector('.song__album').textContent = artists.map((artist)=>{
+    //   return artist.name
+    // })
+
+
+    // if(!checkCurrentSongId(state.track_window.current_track.id)){
+    //   document.querySelector('.like-button').setAttribute('id',state.track_window.current_track.id);
+    // }
+
+
+    // document.querySelector('.progress__value').style.width=`${(state.position/state.duration)*100}%`;
+    }
+    else{
+      // getCurrentDevice().then((device)=>{
+      //   console.log('current device',device);
+      // })
+
+      Cookies.set('DEVICE_ENABLE',false)
+    }
+
+    
+  
+  });
+
+
+ 
+
+  // Ready
+  player.addListener('ready', ({ device_id }) => {
+    Cookies.set('DEVICE_ID',device_id);
+    console.log('Ready with Device ID', device_id);
+  });
+
+  // Not Ready
+  player.addListener('not_ready', ({ device_id }) => {
+    console.log('Device ID has gone offline', device_id);
+  });
+
+  player.connect();
+            }
+      };
+      </script>
   </body>
 </html>

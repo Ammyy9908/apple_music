@@ -89,3 +89,10 @@ ul{
     fill: #EE5F75;
     
 }
+
+
+/* @media only screen and (max-width:1266px){
+    .sidebar{
+      display: none !important;
+    }
+  } */

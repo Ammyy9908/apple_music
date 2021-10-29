@@ -31,7 +31,7 @@
     border-radius: inherit;
 }
 
-.top-pick-section{
+.top-pick-section,.recent-played-section{
     width: 100%;
     margin-top: 0;
     position: relative;
@@ -48,6 +48,7 @@ top: 50px;
 border-top-right-radius: 5px;
 border-bottom-right-radius: 5px;
 filter: blur(10px);
+visibility: hidden;
 }
 .blur_right{
     width: 25px;
@@ -60,18 +61,28 @@ right: -10px;
 border-top-right-radius: 5px;
 border-bottom-right-radius: 5px;
 filter: blur(10px);
+visibility: hidden;
 }
 
 .top-pick-section h4{
     margin-bottom: 5px;
     position: relative;
+    
 }
-.top-pick-cards{
+
+.recent-played-section h4,.made-for-you-section h4{
+    margin-bottom: 15px;
+    
+    
+}
+.top-pick-cards,
+.recent-play-cards{
     display: flex;
     max-width: 100%;
     overflow-x: scroll;
     gap:18px;
     position: relative;
     overflow-y: hidden;
+    visibility: visible !important;
 }
 

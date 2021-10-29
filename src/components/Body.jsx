@@ -3,10 +3,12 @@ import "./Body.css"
 import Container from './Container'
 import Player from './Player'
 import PickCard from './PickCard'
-function Body() {
-
-    const [leftBlur,setLeftBlur] = React.useState(false);
-    const [rightBlur,setRightBlur] = React.useState(false);
+import MusicCard from './MusicCard'
+import MoodCard from './MoodCard'
+import { connect } from 'react-redux'
+function Body({recentPlayed,user}) {
+console.log("Recent",recentPlayed)
+    
 
     const pick_data = [
         {
@@ -85,16 +87,45 @@ function Body() {
 
     ]
 
+
+   
+
+    const made_for_you = [
+        {
+            id:1,
+            cover:"https://is3-ssl.mzstatic.com/image/thumb/Video114/v4/ce/29/03/ce29031d-112d-f099-c1ef-4550e65871c6/Jobcfe7d6fb-b86e-49f3-851f-20bb5d99b8a6-107559482-PreviewImage_preview_image_nonvideo_sdr-Time1601338643510.png/600x600cc-60.jpg",
+            artists:["KR$NA", "AFKAP", "Ritviz", "The Local Train", "Akhil", "Prateek Kuhad", "Sumit Goswami", "Prem Dhillon", "Ammy Virk", "Arijit Singh", "Shankar-Ehsaan-Loy", "Ankur Tewari"]
+        },
+        {
+            id:2,
+            cover:"https://is4-ssl.mzstatic.com/image/thumb/Video124/v4/48/97/9d/48979da3-59bd-395f-dc16-886e874f1fb6/Job28cc60e1-03f4-4a27-8f92-a83335bbeb34-107559151-PreviewImage_preview_image_nonvideo_sdr-Time1601334227455.png/600x600cc-60.jpg",
+            artists:["Jass Manak", "Maninder Buttar", "Gulzaar Chhaniwala", "Millind Gaba", "Simar Doraha", "Ranveer Singh", "Diljit Dosanjh", "Masoom Sharma", "Bilal Saeed", "Bass Yogi", "Kabir Cafe", "G. Sidhu"]
+        },
+        {
+            id:3,
+            cover:"https://is5-ssl.mzstatic.com/image/thumb/Video114/v4/18/d3/b1/18d3b126-0a91-b112-e2fd-e8b6dcb9c238/Jobdefb94c2-6e80-4206-a226-29765632d1af-107559236-PreviewImage_preview_image_nonvideo_sdr-Time1601334010442.png/600x600cc-60.jpg",
+            artists:["Piyush Bhisekar", "Lights Out", "Kaavish", "Dhruv Kapoor", "Bharat Chauhan", "Mrytyunjay Sarkar", "Raj Barman","Ali Sethi", "Mohit Chauhan", "Raghav Chaitanya", "Osho Jain", "Ashu Shukla"]
+        },
+        {
+            id:4,
+            cover:"https://is1-ssl.mzstatic.com/image/thumb/Video114/v4/48/ab/91/48ab91be-9749-3fef-4e7e-5c4b4cc518ae/Jobe1cdcb32-b7f3-43c2-b614-19d75392ce1c-107544037-PreviewImage_preview_image_nonvideo_sdr-Time1601075070432.png/600x600cc-60.jpg",
+            artists:["Pritam", "Karan Aujla", "Sidhu Moose Wala", "Badshah", "Guru Randhawa", "Arijit Singh", "KR$NA", "Karan Randhawa", "Armaan Malik", "Sachin-Jigar", "Kaka", "Akhil Sachdeva"]
+        }
+    ]
+
     const handleScroll = (e)=>{
-        console.log(e.target.scrollLeft)
+        console.log(e.target)
+        const target = e.target;
         const scroll = e.target.scrollLeft;
+        const left_blur = target.parentElement.children[1];
+        const right_blur = target.parentElement.children[3]
         if(scroll>0){
-            setLeftBlur(true);
-            setRightBlur(true);
+            left_blur.style.visibility="visible";
+            right_blur.style.visibility="visible";
         }
         else{
-            setLeftBlur(false);
-            setRightBlur(false);
+            left_blur.style.visibility="hidden";
+            right_blur.style.visibility="hidden";
         }
     }
     return (
@@ -103,25 +134,49 @@ function Body() {
             <Container>
                 <div className="body_header">
                     <h2>Listen Now</h2>
-                    <div className="user__avatar">
-                        <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-0.3.5&q=80&fm=jpg&crop=faces&fit=crop&h=200&w=200&s=046c29138c1335ef8edee7daf521ba50" alt="" />
-                    </div>
+                    {user && <div className="user__avatar">
+                        <img src={user.images[0].url} alt="" />
+                    </div>}
                 </div>
                
                    <div className="top-pick-section">
                        <h4>Top Picks</h4>
-                       {leftBlur && <div className="blur_left"></div>}
+                      <div className="blur_left"></div>
                        <div className="top-pick-cards" onScroll={handleScroll}>
                            
                            {
                                pick_data.map((pick_card,i)=><PickCard title={pick_card.title} cover={pick_card.cover} name={pick_card.meta.name} artists={pick_card.meta.artists} year={pick_card.meta.year} key={i} is_station={pick_card.isStation}/>)
                            }
                        </div>
-                       {rightBlur && <div className="blur_right"></div>}
+                       <div className="blur_right"></div>
+                   </div>
+                   <div className="recent-played-section">
+                       <h4>Recent Played</h4>
+                       <div className="recent-play-cards">
+                          
+                           {
+                               recentPlayed && recentPlayed.filter((v,i,a)=>a.findIndex(t=>(t.track.id === v.track.id))===i).map((recent)=><MusicCard cover={recent.track.album.images[0].url} artist={recent.track.album.artists[0].name} name={recent.track.name}/>)
+                           }
+                       </div>
+                   </div>
+                   <div className="made-for-you-section">
+                       <h4>Made for You</h4>
+                       <div className="recent-play-cards" >
+                          
+                        
+                           {
+                               made_for_you.map((mood)=><MoodCard cover={mood.cover} artists={mood.artists}/>)
+                           }
+                       </div>
                    </div>
             </Container>
         </div>
     )
 }
 
-export default Body
+
+const mapStateToProps = (state)=>({
+    recentPlayed:state.appReducer.recentPlayed,
+    user:state.appReducer.user
+})
+export default connect(mapStateToProps,null)(Body)
