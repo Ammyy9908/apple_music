@@ -5,10 +5,10 @@ import Player from './Player'
 import PickCard from './PickCard'
 import MusicCard from './MusicCard'
 import MoodCard from './MoodCard'
-function Body() {
-
-    const [leftBlur,setLeftBlur] = React.useState(false);
-    const [rightBlur,setRightBlur] = React.useState(false);
+import { connect } from 'react-redux'
+function Body({recentPlayed,user}) {
+console.log("Recent",recentPlayed)
+    
 
     const pick_data = [
         {
@@ -88,44 +88,7 @@ function Body() {
     ]
 
 
-    const recent_played = [
-        {
-            id:1,
-            cover:"https://is2-ssl.mzstatic.com/image/thumb/Music125/v4/f6/a1/ff/f6a1fff8-83b9-bfc0-1f91-c9fced8f28a3/cover.jpg/243x243bb.webp",
-            name:"Chan Vekhya - Single",
-            artist:"Harnoor"
-        },
-        {
-            id:2,
-            cover:"https://is5-ssl.mzstatic.com/image/thumb/Music114/v4/3c/48/91/3c4891c8-136e-cb23-ac9c-b9738c5e4fe9/cover.jpg/243x243bb.webp",
-            name:"Waalian - Single",
-            artist:"Harnoor"
-        },
-        {
-            id:3,
-            cover:"https://is1-ssl.mzstatic.com/image/thumb/Music115/v4/78/0e/29/780e29dd-1504-8653-7eab-b48c08e1f25d/8905285024685.jpg/320x320bb.webp",
-            name:"Parshawan - Single",
-            artist:"Harnoor"
-        },
-        {
-            id:4,
-            cover:"https://is4-ssl.mzstatic.com/image/thumb/Music125/v4/b3/02/1b/b3021b33-2263-0c9d-4b1d-48e0a55466b6/pr_source.png/257x257SC.FPESS02.webp?l=en-GB",
-            name:"Marshmellow - Essentials",
-            artist:"Apple Music Dance"
-        },
-        {
-            id:5,
-            cover:"https://is3-ssl.mzstatic.com/image/thumb/Music128/v4/2c/22/e2/2c22e285-c5bd-7018-4d4b-afc5b649d514/8902633287136.jpg/243x243bb.webp",
-            name:'Fakira (From "Qismat") - Single',
-            artist:"Gurnam Bhullar & B. Praak"
-        },
-        {
-            id:6,
-            cover:"https://is1-ssl.mzstatic.com/image/thumb/Features125/v4/cd/b1/7d/cdb17dc5-53f9-8f39-3b7e-92e632482663/mzl.tubuoqip.jpg/228x228AM.RSMA01.webp?imgLeft=Features115%2Fv4%2Ffa%2F52%2Fdd%2Ffa52ddb2-730b-c79d-4b6d-9590a9d75e52%2Fpr_source.png&imgRight=Features125%2Fv4%2Ff3%2F68%2F45%2Ff3684501-9dbc-4e29-c4e9-2e018a201f5e%2Fpr_source.png",
-            name:"LSD & Similar Artists",
-            artist:null
-        },
-    ]
+   
 
     const made_for_you = [
         {
@@ -171,9 +134,9 @@ function Body() {
             <Container>
                 <div className="body_header">
                     <h2>Listen Now</h2>
-                    <div className="user__avatar">
-                        <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-0.3.5&q=80&fm=jpg&crop=faces&fit=crop&h=200&w=200&s=046c29138c1335ef8edee7daf521ba50" alt="" />
-                    </div>
+                    {user && <div className="user__avatar">
+                        <img src={user.images[0].url} alt="" />
+                    </div>}
                 </div>
                
                    <div className="top-pick-section">
@@ -192,7 +155,7 @@ function Body() {
                        <div className="recent-play-cards">
                           
                            {
-                               recent_played.map((recent)=><MusicCard cover={recent.cover} artist={recent.artist} name={recent.name}/>)
+                               recentPlayed && recentPlayed.filter((v,i,a)=>a.findIndex(t=>(t.track.id === v.track.id))===i).map((recent)=><MusicCard cover={recent.track.album.images[0].url} artist={recent.track.album.artists[0].name} name={recent.track.name}/>)
                            }
                        </div>
                    </div>
@@ -211,4 +174,9 @@ function Body() {
     )
 }
 
-export default Body
+
+const mapStateToProps = (state)=>({
+    recentPlayed:state.appReducer.recentPlayed,
+    user:state.appReducer.user
+})
+export default connect(mapStateToProps,null)(Body)
