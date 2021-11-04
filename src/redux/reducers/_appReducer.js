@@ -18,7 +18,9 @@ const intialState = {
     activeDevice:null,
     randomRecommendation:null,
     isToast:null,
-    isModal:null
+    isModal:null,
+    is_played_first:false,
+    new_releases:null
 
  }
  
@@ -30,6 +32,21 @@ const intialState = {
                error:action.error
             }
          }
+
+         case "SET_NEW_RELEASES":{
+            return{
+               ...state,
+               new_releases:action.new_releases
+            }
+         }
+
+         case "SET_FIRST_PLAY":{
+            return{
+               ...state,
+               is_played_first:action.play_first
+            }
+         }
+
 
          case "SET_MODAL":{
             return{

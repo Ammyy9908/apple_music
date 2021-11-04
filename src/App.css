@@ -36,8 +36,12 @@
   
 }
 
-.body{
+.body,.profile_body{
   background-color: #2C2428 !important;
+}
+
+.user_listening_to_section h3{
+  color: #fff !important;
 }
 .player{
   background-color: #1d1b1c67 !important;
@@ -78,6 +82,15 @@
 .body_header{
   color: #fff !important;
 }
+.lyrics-bar{
+  background-color: #262626b2 !important;
+  color: #999 !important;
+}
+.no_lyric_title{
+  color: #999 !important;
+  
+}
+
 }
 
 /*Media queries*/

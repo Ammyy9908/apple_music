@@ -47,6 +47,9 @@ ul{
 .apple_music_list{
     margin-top: 15px;
 }
+.apple_music_list a{
+    text-decoration: none;
+}
 
 .apple_music_list > li > span{
     color: #B4A8B3;

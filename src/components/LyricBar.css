@@ -1,0 +1,48 @@
+.lyrics-bar{
+    width: 320px;
+    height: 100vh;
+    position: fixed;
+    right: -500px;
+    top: 0;
+    background-color: #ebebebcc;
+    backdrop-filter: blur(50px);
+    z-index: 98;
+    bottom: 0;
+    border-bottom-right-radius: 10px;
+    border-bottom-left-radius: 10px;
+    overflow-y: scroll;
+
+}
+.lyric_enable{
+    right: 0;
+}
+.flexed-lyrics{
+    
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.lyrics{
+    width: 90%;
+    line-height: 65px;
+    margin: 115px auto;
+    color: #6b6b6b;
+    font-size: 32px;
+    font-weight: 900;
+}
+.null-lyrics{
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+}
+.no_lyric_title{
+    color: #585858;
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 25px;
+}
+.no_lyric_subtitle{
+    font-size: 12px;
+}
