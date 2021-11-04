@@ -1,8 +1,8 @@
-.main-screen{
+.profile-screen{
     width: 100%;
     height: 100vh;
     display: grid;
     grid-template-columns: 1fr 6fr;
-    grid-template-areas: "sidebar body";
+    grid-template-areas: "sidebar profile-body";
     position: relative;
 }

@@ -27,6 +27,19 @@
     -webkit-backdrop-filter: inherit;
     border: 1px solid #eaeaea;
 }
+.player_progress{
+    width: 100%;
+    height: 5px;
+    background-color: rgb(228, 228, 228);
+    margin: 0 auto;
+}
+.player_progress_value{
+    width: 0%;
+    height: 100%;
+    background-color: #616161;
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+}
 .player-song-thumb{
     height: 100%;
     width: 45px;
@@ -38,6 +51,15 @@
     height: 100%;
     object-fit: cover;
     border-radius: inherit;
+}
+.player__left{
+    width: 100%;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap:5px;
+    
 }
 .player-meta-text{
     flex: 1;

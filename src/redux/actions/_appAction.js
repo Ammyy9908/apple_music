@@ -3,6 +3,16 @@ export const setOfflineData = (offline_data)=>({
     offline_data
  })
 
+ export const SetFirstPlay = (play_first)=>({
+     type:"SET_FIRST_PLAY",
+     play_first
+ })
+
+ export const SetNewReleases = (new_releases)=>({
+     type:'SET_NEW_RELEASES',
+     new_releases
+ })
+
  //SET_TOKEN
  export const setToken = (token)=>({
     type:"SET_TOKEN",
@@ -41,7 +51,7 @@ export const setOfflineData = (offline_data)=>({
      type:"SET_DROPDOWN",
      dropdown
  })
- export const setCurrentSong = (currentSong)=>({
+ export const SetCurrentSong = (currentSong)=>({
      type:"SET_CURRENT_TRACK",
      currentSong
  })
@@ -69,7 +79,7 @@ export const setOfflineData = (offline_data)=>({
 //     accessToken
 //  })
 
- export const setPlaying= (playing)=>({
+ export const SetPlaying= (playing)=>({
      type:"SET_PLAYING",
      playing
  })

@@ -70,13 +70,13 @@ visibility: hidden;
     
 }
 
-.recent-played-section h4,.made-for-you-section h4{
+.recent-played-section h4,.made-for-you-section h4,.new_relases_section h4{
     margin-bottom: 15px;
     
     
 }
 .top-pick-cards,
-.recent-play-cards{
+.recent-play-cards,.new_release_cards{
     display: flex;
     max-width: 100%;
     overflow-x: scroll;

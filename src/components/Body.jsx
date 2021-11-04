@@ -6,9 +6,9 @@ import PickCard from './PickCard'
 import MusicCard from './MusicCard'
 import MoodCard from './MoodCard'
 import { connect } from 'react-redux'
-function Body({recentPlayed,user}) {
-console.log("Recent",recentPlayed)
-    
+import {Link} from "react-router-dom"
+function Body({recentPlayed,user,setLyrics,is_lyric,setLyric,new_releases}) {
+
 
     const pick_data = [
         {
@@ -114,7 +114,6 @@ console.log("Recent",recentPlayed)
     ]
 
     const handleScroll = (e)=>{
-        console.log(e.target)
         const target = e.target;
         const scroll = e.target.scrollLeft;
         const left_blur = target.parentElement.children[1];
@@ -130,13 +129,13 @@ console.log("Recent",recentPlayed)
     }
     return (
         <div className="body">
-            <Player/>
+            {user && !user.error && <Player setLyrics={setLyrics} setLyric={setLyric} is_lyric={is_lyric}/>}
             <Container>
                 <div className="body_header">
                     <h2>Listen Now</h2>
-                    {user && <div className="user__avatar">
+                    <Link to={`/user/sumit`}>{user && !user.error && <div className="user__avatar">
                         <img src={user.images[0].url} alt="" />
-                    </div>}
+                    </div>}</Link>
                 </div>
                
                    <div className="top-pick-section">
@@ -145,7 +144,7 @@ console.log("Recent",recentPlayed)
                        <div className="top-pick-cards" onScroll={handleScroll}>
                            
                            {
-                               pick_data.map((pick_card,i)=><PickCard title={pick_card.title} cover={pick_card.cover} name={pick_card.meta.name} artists={pick_card.meta.artists} year={pick_card.meta.year} key={i} is_station={pick_card.isStation}/>)
+                               pick_data.map((pick_card,i)=><PickCard key={i} title={pick_card.title} cover={pick_card.cover} name={pick_card.meta.name} artists={pick_card.meta.artists} year={pick_card.meta.year} key={i} is_station={pick_card.isStation}/>)
                            }
                        </div>
                        <div className="blur_right"></div>
@@ -155,7 +154,7 @@ console.log("Recent",recentPlayed)
                        <div className="recent-play-cards">
                           
                            {
-                               recentPlayed && recentPlayed.filter((v,i,a)=>a.findIndex(t=>(t.track.id === v.track.id))===i).map((recent)=><MusicCard cover={recent.track.album.images[0].url} artist={recent.track.album.artists[0].name} name={recent.track.name}/>)
+                               recentPlayed && recentPlayed.filter((v,i,a)=>a.findIndex(t=>(t.track.id === v.track.id))===i).map((recent)=><MusicCard key={recent.track.id} cover={recent.track.album.images[0].url} artist={recent.track.album.artists[0].name} name={recent.track.name} id={recent.track.id} artist_id={recent.track.album.artists[0].id} uri={recent.track.uri} type={"track"}/>)
                            }
                        </div>
                    </div>
@@ -165,7 +164,18 @@ console.log("Recent",recentPlayed)
                           
                         
                            {
-                               made_for_you.map((mood)=><MoodCard cover={mood.cover} artists={mood.artists}/>)
+                               made_for_you.map((mood,i)=><MoodCard cover={mood.cover} artists={mood.artists} key={i}/>)
+                           }
+                       </div>
+                   </div>
+
+                   <div className="new_relases_section">
+                       <h4>New Release</h4>
+                       <div className="new_release_cards">
+                           {
+                               new_releases && new_releases.map((new_release,i)=>{
+                                    return <MusicCard key={i} cover={new_release.images[0].url} artist={new_release.artists[0].name} name={new_release.name} id={new_release.id} artist_id={new_release.artists[0].id} uri={new_release.uri} type={new_release.type}/>
+                               })
                            }
                        </div>
                    </div>
@@ -177,6 +187,7 @@ console.log("Recent",recentPlayed)
 
 const mapStateToProps = (state)=>({
     recentPlayed:state.appReducer.recentPlayed,
-    user:state.appReducer.user
+    user:state.appReducer.user,
+    new_releases:state.appReducer.new_releases
 })
 export default connect(mapStateToProps,null)(Body)

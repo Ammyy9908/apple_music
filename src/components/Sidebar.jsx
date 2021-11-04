@@ -6,6 +6,7 @@ import {FiRadio} from "react-icons/fi"
 import {GiMicrophone} from "react-icons/gi"
 import {IoMdAlbums} from "react-icons/io"
 import {FcMusic} from "react-icons/fc"
+import { Link } from 'react-router-dom'
 function Sidebar() {
     return (
         <div className="sidebar">
@@ -19,9 +20,9 @@ function Sidebar() {
                         <span>Apple Music</span></li>
                         <li>
                             <ul>
-                                <li className="active__option"><FaRegPlayCircle/><span>Listen Now</span></li>
-                                <li><FaMusic/> <span>Browse</span></li>
-                                <li><FiRadio/> <span>Radio</span></li>
+                                <Link to="/"><li className="active__option"><FaRegPlayCircle/><span>Listen Now</span></li></Link>
+                                <Link to="/browse"><li><FaMusic/> <span>Browse</span></li></Link>
+                                <Link to="/radio"><li><FiRadio/> <span>Radio</span></li></Link>
                             </ul>
                         </li>
                 </ul>
