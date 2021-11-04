@@ -144,7 +144,7 @@ function Body({recentPlayed,user,setLyrics,is_lyric,setLyric,new_releases}) {
                        <div className="top-pick-cards" onScroll={handleScroll}>
                            
                            {
-                               pick_data.map((pick_card,i)=><PickCard key={i} title={pick_card.title} cover={pick_card.cover} name={pick_card.meta.name} artists={pick_card.meta.artists} year={pick_card.meta.year} key={i} is_station={pick_card.isStation}/>)
+                               pick_data.map((pick_card,i)=><PickCard title={pick_card.title} cover={pick_card.cover} name={pick_card.meta.name} artists={pick_card.meta.artists} year={pick_card.meta.year} key={i} is_station={pick_card.isStation}/>)
                            }
                        </div>
                        <div className="blur_right"></div>

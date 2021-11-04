@@ -18,7 +18,9 @@ function Profile({SetCurrentSong}) {
             console.log(`Current playing track is `,current_track);
             SetCurrentSong(current_track)
         })
-      },[])
+      },
+      // eslint-disable-next-line
+      [])
 
     return (
         <div className="profile-screen">

@@ -34,7 +34,9 @@ const [is_lyric,setLyricToggle] = React.useState(false);
             console.log(`Current playing track is `,current_track);
             SetCurrentSong(current_track)
         })
-      },[])
+      },
+      // eslint-disable-next-line
+      [])
       
 
     return (
