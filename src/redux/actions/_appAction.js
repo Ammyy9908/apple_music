@@ -68,10 +68,10 @@ export const setOfflineData = (offline_data)=>({
 //     categories
 // })
 
-// export const setRecommendation = (recommendations)=>({
-//     type:"SET_RECOMENDATION",
-//     recommendations
-// })
+export const SetRecommendation = (recommendations)=>({
+    type:"SET_RECOMENDATION",
+    recommendations
+})
 
 //SET_ACCESS_TOKEN
 // export const setAccessToken = (accessToken)=>({
@@ -84,10 +84,15 @@ export const setOfflineData = (offline_data)=>({
      playing
  })
 
-//  export const setDevices = (devices)=>({
-//      type:"SET_DEVICES",
-//      devices
-//  })
+ export const SetDevices = (devices)=>({
+     type:"SET_DEVICES",
+     devices
+ })
+
+ export const SetDeviceToggle = (device_toggle)=>({
+     type:"SET_DEVICE_TOGGLE",
+     device_toggle
+ })
 
 //  export const setDeviceToggle = (isDevices)=>({
 //      type:"SET_DEIVICE_TOGGLE",

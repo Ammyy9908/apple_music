@@ -20,7 +20,8 @@ const intialState = {
     isToast:null,
     isModal:null,
     is_played_first:false,
-    new_releases:null
+    new_releases:null,
+    device_toggle:false
 
  }
  
@@ -32,6 +33,12 @@ const intialState = {
                error:action.error
             }
          }
+         case "SET_DEVICE_TOGGLE":{
+            return {
+               ...state,
+               device_toggle:action.device_toggle
+            }
+         }
 
          case "SET_NEW_RELEASES":{
             return{
@@ -39,6 +46,7 @@ const intialState = {
                new_releases:action.new_releases
             }
          }
+         
 
          case "SET_FIRST_PLAY":{
             return{
@@ -62,12 +70,12 @@ const intialState = {
             }
          }
 
-         case "SET_RANDOM_RECOMMENDATIONS":{
-            return{
-               ...state,
-               randomRecommendation:action.randomRecommendation
-            }
-         }
+         // case "SET_RANDOM_RECOMMENDATIONS":{
+         //    return{
+         //       ...state,
+         //       randomRecommendation:action.randomRecommendation
+         //    }
+         // }
 
 
          case "SET_ACTIVE_DEVICE":{
