@@ -1,12 +1,9 @@
 import axios from "axios"
-import Cookies from "js-cookie"
 
 
-const getNewToken = async ()=>{
+const getSpotifyToken = async ()=>{
     try{
-        const r = await axios.post('http://localhost:5000/refresh_token',{
-            refresh_token:Cookies.get('REFRESH_TOKEN')
-        });
+        const r = await axios.get('https://spotifyserversumit.herokuapp.com/getToken');
 
        return r.data;
     }
@@ -15,4 +12,4 @@ const getNewToken = async ()=>{
     }
 }
 
-export default getNewToken;
+export default getSpotifyToken;

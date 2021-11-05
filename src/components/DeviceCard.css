@@ -1,0 +1,53 @@
+.device_card{
+    padding-top: 0px;
+    padding-bottom: 10px;
+    background-color: #ffffff4b;
+    position: fixed;
+    z-index: 9999;
+    right: 20px;
+    bottom: 20px;
+    width: 320px;
+    border-radius: 5px;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+}
+
+.device_card_lists{
+    width: 90%;
+    margin: 0 auto;
+}
+.device-list{
+    padding-top: 12px;
+    padding-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap:10px;
+    cursor: pointer;
+}
+
+
+.active_device{
+    font-size: 23px !important;
+    font-weight: 600 !important;
+}
+
+.device_play_btn{
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    cursor: pointer;
+    border: 1px solid transparent;
+}
+
+.device_card_close{
+    width: 32px;
+    height: 32px;
+    position: absolute;
+    right: 10px;
+    top: -10px;
+    border-radius: 50%;
+    border: 1px solid transparent;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

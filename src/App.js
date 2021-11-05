@@ -5,14 +5,21 @@ import React from "react"
 import {BrowserRouter as Router,Switch,Route} from "react-router-dom";
 import getRecent from "./utils/recent-played"
 import { connect } from 'react-redux';
-import { SetNewReleases, SetRecent, SetUser } from './redux/actions/_appAction';
+import { SetDevices, SetNewReleases, SetRecent, SetRecommendation, SetUser } from './redux/actions/_appAction';
 import getUser from "./utils/get-user"
 import Profile from './pages/Profile';
 import Cookies from 'js-cookie';
 import getNewReleases from "./utils/new-releases"
 import Browse from './pages/Browse';
+import getDesktopData from './utils/getDesktopData';
+import getSpotifyToken from "./utils/getAccessToken"
+import getRecommendation from './utils/Recommendation';
+import getGenres from './utils/getGenres';
+import getTopArtists from './utils/user_top_artists';
+import getTopTracks from './utils/user_top_tracks';
+import getDevices from './utils/getDevices';
 
-function App({SetRecent,SetUser,SetNewReleases}) {
+function App({SetRecent,SetUser,SetNewReleases,SetRecommendation,SetDevices}) {
 
   
 
@@ -49,6 +56,75 @@ function App({SetRecent,SetUser,SetNewReleases}) {
       const {items} = newReleases.albums;
       SetNewReleases(items);
     })
+
+
+    // get desktop data
+    getSpotifyToken().then((data)=>{
+      const {token} = data;
+      return token;
+    }).then((token)=>{
+      getDesktopData(token).then((data)=>{
+        console.log(`Desktop Data`,data);
+      })
+
+      let personalizations = {
+        artist:null,
+        genre:null,
+        track:null
+      }
+
+
+      getGenres().then((data)=>{
+        const {genres} = data;
+        personalizations.genre = genres[Math.floor(Math.random()*(0,genres.length))];
+        return false;
+      }).then(()=>{
+        getTopArtists().then((data)=>{
+          console.log('Users to artists',data);
+          const {items}=data;
+          personalizations.artist = items[Math.floor(Math.random()*(0,items.length))].id;
+        }).then(()=>{
+          getTopTracks().then((data)=>{
+            console.log('User top tracks ',data);
+    
+            const {items} = data;
+    
+            personalizations.track = items[Math.floor(Math.random()*(0,items.length))].id;
+
+            
+            getRecommendation(token,personalizations).then((recommendation)=>{
+              console.log(`Recommendation`,recommendation);
+
+              SetRecommendation(recommendation.tracks);
+            })
+          })
+        })
+      })
+
+     
+
+      
+
+
+      
+
+
+
+      
+
+     
+    })
+
+
+
+    // get all devices
+
+    getDevices().then((data)=>{
+      console.log(`All active devices`,data);
+      const {devices} = data;
+      SetDevices(devices);
+    })
+    
     
   },
 
@@ -94,7 +170,9 @@ function App({SetRecent,SetUser,SetNewReleases}) {
 const mapDispatchToProps = (dispatch)=>({
   SetRecent:(recentPlayed)=>dispatch(SetRecent(recentPlayed)),
   SetUser:(user)=>dispatch(SetUser(user)),
-  SetNewReleases:(new_releases)=>dispatch(SetNewReleases(new_releases))
+  SetNewReleases:(new_releases)=>dispatch(SetNewReleases(new_releases)),
+  SetRecommendation:(recommendations)=>dispatch(SetRecommendation(recommendations)),
+  SetDevices:(devices)=>dispatch(SetDevices(devices))
  
   
 })

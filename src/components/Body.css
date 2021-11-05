@@ -70,13 +70,13 @@ visibility: hidden;
     
 }
 
-.recent-played-section h4,.made-for-you-section h4,.new_relases_section h4{
+.recent-played-section h4,.made-for-you-section h4,.new_relases_section h4,.recommended_tracks_section h4{
     margin-bottom: 15px;
     
     
 }
 .top-pick-cards,
-.recent-play-cards,.new_release_cards{
+.recent-play-cards,.new_release_cards,.recommended_track_cards{
     display: flex;
     max-width: 100%;
     overflow-x: scroll;
@@ -86,3 +86,21 @@ visibility: hidden;
     visibility: visible !important;
 }
 
+
+.device-fab{
+    width: 55px;
+    height: 55px;
+    position: fixed;
+    z-index: 999;
+    right: 25px;
+    bottom: 25px;
+    border: 1px solid transparent;
+    background-color: rgb(255, 38, 0);
+    color: #fff;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

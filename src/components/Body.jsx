@@ -7,7 +7,11 @@ import MusicCard from './MusicCard'
 import MoodCard from './MoodCard'
 import { connect } from 'react-redux'
 import {Link} from "react-router-dom"
-function Body({recentPlayed,user,setLyrics,is_lyric,setLyric,new_releases}) {
+import DeviceCard from './DeviceCard'
+import {BiDevices} from "react-icons/bi"
+import { SetDevices, SetDeviceToggle } from '../redux/actions/_appAction'
+import getDevices from '../utils/getDevices'
+function Body({recentPlayed,user,setLyrics,is_lyric,setLyric,new_releases,recommendations,devices,SetDeviceToggle,device_toggle,SetDevices}) {
 
 
     const pick_data = [
@@ -127,8 +131,27 @@ function Body({recentPlayed,user,setLyrics,is_lyric,setLyric,new_releases}) {
             right_blur.style.visibility="hidden";
         }
     }
+
+
+    const handleGetDevices = ()=>{
+        getDevices().then((data)=>{
+            console.log(`All active devices`,data);
+            const {devices} = data;
+            SetDevices(devices);
+            SetDeviceToggle(true);
+          })
+
+
+    }
+
+    const handleDeviceClose =(e)=>{
+        
+        if(!e.target.classList.contains("device_card")){
+            SetDeviceToggle(false);
+        }
+    }
     return (
-        <div className="body">
+        <div className="body" onClick={handleDeviceClose}>
             {user && !user.error && <Player setLyrics={setLyrics} setLyric={setLyric} is_lyric={is_lyric}/>}
             <Container>
                 <div className="body_header">
@@ -178,16 +201,41 @@ function Body({recentPlayed,user,setLyrics,is_lyric,setLyric,new_releases}) {
                                })
                            }
                        </div>
+
+                       <div className="recommended_tracks_section">
+                           <h4>Recommendation</h4>
+
+                           <div className="recommended_track_cards">
+                            {
+                                recommendations && recommendations.map((recommendation,i)=>{
+                                    return <MusicCard key={i} cover={recommendation.album.images[0].url} artist={recommendation.artists[0].name} name={recommendation.name} id={recommendation.id} artist_id={recommendation.artists[0].id} uri={recommendation.uri} type={"track"}/>
+                                })
+                            }
+                           </div>
+                       </div>
                    </div>
+
+                   {!device_toggle && <button className="device-fab" onClick={handleGetDevices}>
+                                <BiDevices/>
+                   </button>}
+                   {device_toggle && <DeviceCard devices={devices}/>}
             </Container>
         </div>
     )
 }
 
 
+
+const mapDispatchToProps = (dispatch)=>({
+    SetDeviceToggle:(device_toggle)=>dispatch(SetDeviceToggle(device_toggle)),
+    SetDevices:(devices)=>dispatch(SetDevices(devices))
+})
 const mapStateToProps = (state)=>({
     recentPlayed:state.appReducer.recentPlayed,
     user:state.appReducer.user,
-    new_releases:state.appReducer.new_releases
+    new_releases:state.appReducer.new_releases,
+    recommendations:state.appReducer.recommendations,
+    devices:state.appReducer.devices,
+    device_toggle:state.appReducer.device_toggle
 })
-export default connect(mapStateToProps,null)(Body)
+export default connect(mapStateToProps,mapDispatchToProps)(Body)
