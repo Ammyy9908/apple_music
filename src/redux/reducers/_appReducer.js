@@ -21,7 +21,8 @@ const intialState = {
     isModal:null,
     is_played_first:false,
     new_releases:null,
-    device_toggle:false
+    device_toggle:false,
+    is_camera:false
 
  }
  
@@ -31,6 +32,13 @@ const intialState = {
             return{
                ...state,
                error:action.error
+            }
+         }
+
+         case "SET_CAMERA":{
+            return {
+               ...state,
+               is_camera:action.is_camera
             }
          }
          case "SET_DEVICE_TOGGLE":{

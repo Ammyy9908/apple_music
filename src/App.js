@@ -1,7 +1,7 @@
 
 import './App.css';
 import Main from './pages/Main';
-import React from "react"
+import React,{useEffect} from "react"
 import {BrowserRouter as Router,Switch,Route} from "react-router-dom";
 import getRecent from "./utils/recent-played"
 import { connect } from 'react-redux';
@@ -18,12 +18,13 @@ import getGenres from './utils/getGenres';
 import getTopArtists from './utils/user_top_artists';
 import getTopTracks from './utils/user_top_tracks';
 import getDevices from './utils/getDevices';
+import searchTrack from './utils/search';
+
 
 function App({SetRecent,SetUser,SetNewReleases,SetRecommendation,SetDevices}) {
 
-  
 
-  React.useEffect(()=>{
+useEffect(()=>{
 
     getRecent().then((recent)=>{
       
@@ -53,14 +54,26 @@ function App({SetRecent,SetUser,SetNewReleases,SetRecommendation,SetDevices}) {
       if(error){
         return console.log(`There is error in getting new releases`);
       }
-      const {items} = newReleases.albums;
+      const items= newReleases&& newReleases.album && newReleases.album.items;
       SetNewReleases(items);
     })
 
 
+    
+
+
+    // get all devices
+
+    getDevices().then((data)=>{
+      console.log(`All active devices`,data);
+      const {devices} = data;
+      SetDevices(devices);
+    })
+
     // get desktop data
-    getSpotifyToken().then((data)=>{
+    Cookies.get('SPOTIFY_TOKEN') && getSpotifyToken().then((data)=>{
       const {token} = data;
+      console.log(`token`,token);
       return token;
     }).then((token)=>{
       getDesktopData(token).then((data)=>{
@@ -82,14 +95,14 @@ function App({SetRecent,SetUser,SetNewReleases,SetRecommendation,SetDevices}) {
         getTopArtists().then((data)=>{
           console.log('Users to artists',data);
           const {items}=data;
-          personalizations.artist = items[Math.floor(Math.random()*(0,items.length))].id;
+          personalizations.artist = items.length>0 && items[Math.floor(Math.random()*(0,items.length))].id;
         }).then(()=>{
           getTopTracks().then((data)=>{
             console.log('User top tracks ',data);
     
             const {items} = data;
     
-            personalizations.track = items[Math.floor(Math.random()*(0,items.length))].id;
+            personalizations.track = items.length>0 && items[Math.floor(Math.random()*(0,items.length))].id;
 
             
             getRecommendation(token,personalizations).then((recommendation)=>{
@@ -100,36 +113,32 @@ function App({SetRecent,SetUser,SetNewReleases,SetRecommendation,SetDevices}) {
           })
         })
       })
-
-     
-
-      
-
-
-      
-
-
-
-      
-
-     
     })
 
 
 
-    // get all devices
 
-    getDevices().then((data)=>{
-      console.log(`All active devices`,data);
-      const {devices} = data;
-      SetDevices(devices);
-    })
+    // Search a Track
+
+    searchTrack('Ritviz').then((track)=>{
+      console.log(`Search Track`,track);
+    }).catch(e=>console.log(e))
+
+
+    
+
+
     
     
   },
 
+
+
   // eslint-disable-next-line
   [])
+
+
+  
   return (
     <Router>
   <div>

@@ -118,3 +118,8 @@ export const SetRecommendation = (recommendations)=>({
 //      type:"SET_MODAL",
 //      isModal
 //  })
+
+export const SetCamera = (is_camera)=>({
+    type:"SET_CAMERA",
+    is_camera:is_camera
+})

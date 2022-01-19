@@ -9,9 +9,11 @@ import { connect } from 'react-redux'
 import {Link} from "react-router-dom"
 import DeviceCard from './DeviceCard'
 import {BiDevices} from "react-icons/bi"
-import { SetDevices, SetDeviceToggle } from '../redux/actions/_appAction'
+import {BsCameraFill} from "react-icons/bs"
+import { SetCamera, SetDevices, SetDeviceToggle } from '../redux/actions/_appAction'
 import getDevices from '../utils/getDevices'
-function Body({recentPlayed,user,setLyrics,is_lyric,setLyric,new_releases,recommendations,devices,SetDeviceToggle,device_toggle,SetDevices}) {
+import Camera from './Camera'
+function Body({recentPlayed,user,setLyrics,is_lyric,setLyric,new_releases,recommendations,devices,SetDeviceToggle,device_toggle,SetDevices,SetCamera,is_camera}) {
 
 
     const pick_data = [
@@ -157,8 +159,9 @@ function Body({recentPlayed,user,setLyrics,is_lyric,setLyric,new_releases,recomm
                 <div className="body_header">
                     <h2>Listen Now</h2>
                     <Link to={`/user/sumit`}>{user && !user.error && <div className="user__avatar">
-                        <img src={user.images[0].url} alt="" />
+                        <img src={user.images.length>0 && user.images[0].url} alt="" />
                     </div>}</Link>
+                    {!user && <a href="https://applemusicserver.herokuapp.com/login" className='login-btn'>Login</a>}
                 </div>
                
                    <div className="top-pick-section">
@@ -192,33 +195,37 @@ function Body({recentPlayed,user,setLyrics,is_lyric,setLyric,new_releases,recomm
                        </div>
                    </div>
 
-                   <div className="new_relases_section">
+                   {new_releases && <div className="new_relases_section">
                        <h4>New Release</h4>
                        <div className="new_release_cards">
                            {
-                               new_releases && new_releases.map((new_release,i)=>{
+                            new_releases.map((new_release,i)=>{
                                     return <MusicCard key={i} cover={new_release.images[0].url} artist={new_release.artists[0].name} name={new_release.name} id={new_release.id} artist_id={new_release.artists[0].id} uri={new_release.uri} type={new_release.type}/>
                                })
                            }
                        </div>
 
-                       <div className="recommended_tracks_section">
+                       
+                   </div>}
+                   {recommendations && <div className="recommended_tracks_section">
                            <h4>Recommendation</h4>
 
                            <div className="recommended_track_cards">
                             {
-                                recommendations && recommendations.map((recommendation,i)=>{
+                               recommendations.map((recommendation,i)=>{
                                     return <MusicCard key={i} cover={recommendation.album.images[0].url} artist={recommendation.artists[0].name} name={recommendation.name} id={recommendation.id} artist_id={recommendation.artists[0].id} uri={recommendation.uri} type={"track"}/>
                                 })
                             }
                            </div>
-                       </div>
-                   </div>
+                       </div>}
 
-                   {!device_toggle && <button className="device-fab" onClick={handleGetDevices}>
+                   {user && !device_toggle &&  <button className="device-fab" onClick={handleGetDevices}>
+                       
                                 <BiDevices/>
                    </button>}
+                   {user && !is_camera && <button onClick={()=>SetCamera(true)} className='camera_toggle'><BsCameraFill/></button>}
                    {device_toggle && <DeviceCard devices={devices}/>}
+                   {is_camera && <Camera/>}
             </Container>
         </div>
     )
@@ -228,7 +235,8 @@ function Body({recentPlayed,user,setLyrics,is_lyric,setLyric,new_releases,recomm
 
 const mapDispatchToProps = (dispatch)=>({
     SetDeviceToggle:(device_toggle)=>dispatch(SetDeviceToggle(device_toggle)),
-    SetDevices:(devices)=>dispatch(SetDevices(devices))
+    SetDevices:(devices)=>dispatch(SetDevices(devices)),
+    SetCamera:(is_camera)=>dispatch(SetCamera(is_camera)),
 })
 const mapStateToProps = (state)=>({
     recentPlayed:state.appReducer.recentPlayed,
@@ -236,6 +244,7 @@ const mapStateToProps = (state)=>({
     new_releases:state.appReducer.new_releases,
     recommendations:state.appReducer.recommendations,
     devices:state.appReducer.devices,
-    device_toggle:state.appReducer.device_toggle
+    device_toggle:state.appReducer.device_toggle,
+    is_camera:state.appReducer.is_camera,
 })
 export default connect(mapStateToProps,mapDispatchToProps)(Body)
