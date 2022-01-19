@@ -89,7 +89,7 @@ function Camera({setCamera}) {
         <div className='camera'>
             <button className='camera_close' onClick={stopCamera}><MdOutlineClear/></button>
             <div className='emotion'>
-                <span>{emotion && emotion.sad && "😥" || emotion.angry && "😠" || emotion.happy && "🤗" || emotion.neutral && "😐" || emotion.surprised && "😮" || emotion.response && "😱"}</span>
+                <span>{(emotion && emotion.sad && "😥") || (emotion.angry && "😠") || (emotion.happy && "🤗") || (emotion.neutral && "😐") || (emotion.surprised && "😮") || (emotion.response && "😱")}</span>
               </div>
             <video autoPlay playsInline muted id="videoElement">
               
