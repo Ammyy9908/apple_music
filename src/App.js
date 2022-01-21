@@ -37,7 +37,7 @@ useEffect(()=>{
       const {error} = user;
       
       if(error){
-         window.location.href='http://localhost:5000/login'
+         window.location.href='https://applemusicserver.herokuapp.com/login'
       }
       else{
         SetUser(user)
